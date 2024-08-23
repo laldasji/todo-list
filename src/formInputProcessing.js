@@ -16,6 +16,11 @@ function syncLocalStorage(object, key) {
   }
 }
 
+syncLocalStorage(tasks, "taskList");
+syncLocalStorage(taskHistory, "taskHistoryList");
+syncLocalStorage(habits, "habitsList");
+syncLocalStorage(habitHistory, "habitHistoryList");
+
 (function setMinDateToToday() {
   const dateInput = document.getElementById('taskDueDate');
   const today = new Date();
@@ -94,6 +99,7 @@ HabitSubmission.addEventListener('click', (event) => {
   const newHabit = new HabitTask(name, description, priority);
   habits.push(newHabit);
   localStorage.setItem("habitsList", JSON.stringify(habits.list));
+  showContent(listElements[0]);
 
   habitForm.reset();
 

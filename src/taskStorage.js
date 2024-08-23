@@ -1,4 +1,4 @@
-import {SingleInstanceTask, HabitTask} from './taskObjects.js';
+import { SingleInstanceTask, HabitTask} from './taskObjects.js';
 import { formatDistanceToNowStrict } from 'date-fns';
 
 function insertTaskByPriority(list, insertedTask) {
@@ -10,18 +10,6 @@ function insertTaskByPriority(list, insertedTask) {
         i++;
     }
     list.splice(i, 0, insertedTask);
-}
-
-function remove(list, taskID) {
-    let i = 0;
-    for (i; i < this.list.length; i++) {
-        if (list[i].taskID == taskID)
-            break;
-        i++;
-    }
-    if (i != this.list.length) {
-        this.list.splice(i, 1);
-    }
 }
 
 class Habits {
@@ -41,9 +29,6 @@ class Habits {
         }
         insertTaskByPriority(this.list, habit);
     }
-    remove(taskID) {
-        remove(this.list, taskID);
-    }
 }
 
 class HabitHistory {
@@ -62,11 +47,8 @@ class HabitHistory {
     trim() {
         let i = 0;
         while (i < this.list.length) {
-            const currentDistance = formatDistanceToNowStrict(list[i].DateOfCreation, {
-                unit: 'month',
-                roundingMethod: 'floor'
-            });
-            if (currentDistance[0] == '0') {
+            const currentDistance = formatDistanceToNowStrict(list[i].DateOfCreation);
+            if (currentDistance.includes('month')) {
                 break;
             }
             i++;
@@ -80,9 +62,6 @@ class Tasks {
     list = [];
     push(task) {
         insertTaskByPriority(this.list, task);
-    }
-    remove(taskID) {
-        remove(this.list, taskID);
     }
 }
 

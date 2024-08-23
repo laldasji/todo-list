@@ -15,10 +15,16 @@ const classes = {
 
 const contentGenerator = {
     Habits: () => {
-        const habitsList = JSON.parse(localStorage.getItem("habitsList"));
+        let habitsList = JSON.parse(localStorage.getItem("habitsList"));
         const element = document.createElement('div');
-        if (habitsList == null)
+        if (habitsList.length == 0)
+        {
+            const announce = document.createElement('h3');
+            announce.textContent = 'Your habits are displayed here!';
+            announce.style.placeSelf = 'center';
+            element.appendChild(announce);
             return element;
+        }
         for (let i = 0; i < habitsList.length; i++) {
             const currentHabit = habitsList[i];
 
@@ -33,9 +39,34 @@ const contentGenerator = {
             if (currentHabit.checked)
                 checkBox.checked = true;
             checkBox.id = currentHabit.taskID;
+            checkBox.addEventListener('change', (event) => {
+                const index = habitsList.findIndex(element => element.taskID == currentHabit.taskID);
+                if (index == -1) {
+                    console.log('does not exist');
+                    return;
+                }
+                if (event.target.checked) {
+                    habitsList[index].checked = true;
+                }
+                else {
+                    habitsList[index].checked = false;
+                }
+                console.log(habitsList[index]);
+                localStorage.setItem("habitsList", JSON.stringify(habitsList));
+            });
+
             name.textContent = currentHabit.Name;
             description.textContent = currentHabit.Description;
             deleteHabit.textContent = 'Delete';
+            deleteHabit.addEventListener('click', () => {
+                const index = habitsList.findIndex(element => element.taskID == currentHabit.taskID)
+                if (index == -1)
+                    return;
+                habitsList.splice(index, 1);
+
+                localStorage.setItem("habitsList", JSON.stringify(habitsList));
+                element.removeChild(child);
+            })
 
             check.appendChild(checkBox);
             child.append(check, name, description, deleteHabit);
@@ -121,7 +152,11 @@ const contentGenerator = {
     },
     HabitHistory: () => {
         const element = document.createElement('div');
-        element.textContent = 'work in progress';
+        const announce = document.createElement('h3');
+        announce.textContent = 'Will be available soon!';
+        announce.style.placeSelf = 'center';
+        announce.style.textAlign = 'center';
+        element.appendChild(announce);
         return element;
     },
     TaskHistory: () => {
@@ -138,6 +173,7 @@ const contentGenerator = {
             const announce = document.createElement('h3');
             announce.textContent = 'Completed tasks are displayed here!';
             announce.style.placeSelf = 'center';
+            announce.style.textAlign = 'center';
             element.appendChild(announce);
             return element;
         }
@@ -209,7 +245,11 @@ const contentGenerator = {
     },
     Notes: () => {
         const element = document.createElement('div');
-        element.textContent = 'work in progress';
+        const announce = document.createElement('h3');
+        announce.textContent = 'Work in progress!';
+        announce.style.placeSelf = 'center';
+        announce.style.textAlign = 'center';
+        element.appendChild(announce);
         return element;
     }
 };
