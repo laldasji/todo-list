@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: Noto-Sans;
+    src: url(./Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf);
+}
+
+:root[data-theme="light"] {
+    --text: #090425;
+    --background: #fbfbfe;
+    --primary: #7765e6;
+    --secondary: #e5fbff;
+    --accent: #b5b3ff;
+}
+
+:root[data-theme="dark"] {
+    --text: #dfdafb;
+    --background: #010104;
+    --primary: #2a199a;
+    --secondary: #00161a;
+    --accent: #03004d;
+}
+
+body {
+    font-family: Noto-Sans;
+    font-weight: 400;
+    color: var(--text);
+    background: var(--background);
+    ::selection {
+        background-color: var(--accent);
+    }
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: Noto-Sans;
+    font-weight: 700;
+}
+
+html {
+    font-size: 16px;
+}
+
+
+h1 {
+    font-size: 4.210rem;
+    /* 67.36px */
+}
+
+h2 {
+    font-size: 3.158rem;
+    /* 50.56px */
+}
+
+h3 {
+    font-size: 2.369rem;
+    /* 37.92px */
+}
+
+h4 {
+    font-size: 1.777rem;
+    /* 28.48px */
+}
+
+h5 {
+    font-size: 1.333rem;
+    /* 21.28px */
+}
+
+small {
+    font-size: 0.750rem;
+    /* 12px */
+}
+
+button {
+    cursor: pointer;
+}
