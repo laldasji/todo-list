@@ -272,11 +272,41 @@ const contentGenerator = {
     },
     Notes: () => {
         const element = document.createElement('div');
-        const announce = document.createElement('h3');
-        announce.textContent = 'Work in progress!';
-        announce.style.placeSelf = 'center';
-        announce.style.textAlign = 'center';
-        element.appendChild(announce);
+        const notesList = JSON.parse(localStorage.getItem("Notes"));
+        for (let i = 0; i < notesList.length; i++) {
+            const box = document.createElement('div');
+            const heading = document.createElement('h5');
+            const content = document.createElement('p');
+            const DeleteButton = document.createElement('button');
+
+            heading.textContent = notesList[i].Title;
+            content.textContent = notesList[i].Content;
+            DeleteButton.textContent = 'Delete';
+            DeleteButton.addEventListener('click', () => {
+                element.removeChild(box);
+                notesList.splice(i, 1);
+                localStorage.setItem("Notes", JSON.stringify(notesList));
+            })
+
+            box.classList.add('notesBox');
+            box.append(heading, content, DeleteButton);
+
+            element.appendChild(box);
+        }
+        const AddNoteButton = document.createElement('div');
+        const AddNoteContent = document.createElement('h1');
+
+        AddNoteButton.id = 'AddNoteButton';
+        AddNoteButton.title = 'Add New Note';
+        AddNoteButton.addEventListener('click', () => {
+            const addNotesDialog = document.querySelector('#addNotesDialog');
+            addNotesDialog.style.display = 'grid';
+        });
+        AddNoteContent.textContent = '+';
+        AddNoteButton.appendChild(AddNoteContent);
+
+
+        element.appendChild(AddNoteButton);
         return element;
     }
 };

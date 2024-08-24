@@ -27,7 +27,7 @@ body {
     box-shadow: 0 0 0.5em var(--text);
     border-radius: 0.5em;
     width: calc(250px + 15%);
-    height: 60%;
+    height: fit-content;
     place-self: center;
 
     #addTaskType {
@@ -105,12 +105,84 @@ body {
                 }
             }
         }
+    }
+}
 
-        .alert {
-            font-weight: 700;
-            color: var(--primary);
+#addNotesDialog {
+    z-index: 998;
+    position: fixed;
+    backdrop-filter: blur(20px);
+    grid-template-rows: 2em 1fr;
+    padding: 1em;
+    box-shadow: 0 0 0.5em var(--text);
+    border-radius: 0.5em;
+    width: calc(250px + 15%);
+    height: fit-content;
+    place-self: center;
+    display: grid;
+    & #NotesDialogHeading {
+        text-align: center;
+        font-weight: 700;
+    }
+    form {
+        font-size: 1.1rem;
+        text-align: left;
+        padding: 1em;
+        display: grid;
+        gap: 1em;
+
+        label {
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+
+        input, textarea {
+            padding: 0.5em;
+            font-size: 1.1rem;
+            transition-duration: 0.25s;
+            border: none;
+            border-bottom: 1px solid var(--text);
+            outline: none;
+            background-color: rgba(0, 0, 0, 0);
+            caret-color: var(--text);
+            color: var(--text);
+        }
+
+        input[type="text"]:focus {
+            border-bottom: 1px solid var(--primary);
+            transform: scaleX(1.05);
+        }
+
+        & #NoteSubmission {
+            color: var(--text);
+            font-size: 1rem;
+            padding: 0.75em;
+            background-color: var(--primary);
+            border-radius: 0.5em;
+            width: 100%;
+            cursor: pointer;
+
+            &:hover {
+                box-shadow: 0.25em 0.25em 0 var(--text);
+            }
+        }
+
+        textarea {
+            resize: none;
+            width: 90%;
+        }
+
+        textarea:focus {
+            border-bottom: 1px solid var(--primary);
+            transform: scaleX(1.05);
+            height: auto;
         }
     }
+}
+
+.alert {
+    font-weight: 700;
+    color: var(--primary);
 }
 
 button {
@@ -242,6 +314,92 @@ button {
     border-left: 0.5em solid skyblue;
     border-right: 0.5em solid skyblue;
 }
+.habitDisplayer {
+    height: calc(100dvh - 10em);
+    width: 99%;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content;
+    grid-auto-rows: min-content;
+    scrollbar-width: none;
+    gap: 0.75em;
+    
+    &>div {
+        height: fit-content;
+        justify-self: center;
+        transition-duration: 0.25s;
+        width: 90%;
+        border-radius: 1em;
+        padding: 0.5em;
+        margin: 0.5em;
+        background-color: var(--background);
+        display: grid;
+        grid-template-columns: 1.5em 1fr 2fr 5em;
+        
+        
+        &:hover {
+            box-shadow: 0 0 0.5em var(--text);
+        }
+        
+        & button {
+            background-color: none;
+            font-size: 1rem;
+            border-radius: 0.5em;
+            height: min-content;
+            width: min-content;
+            padding: 0.5em;
+            background-color: var(--accent);
+            align-self: center;
+            
+            &:hover {
+                background-color: var(--primary);
+            }
+        }
+    }
+}
+
+.taskDisplayer {
+    height: calc(100dvh - 10em);
+    width: 99%;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content;
+    grid-auto-rows: min-content;
+    scrollbar-width: none;
+    gap: 0.75em;
+    
+    &>div {
+        height: fit-content;
+        justify-self: center;
+        transition-duration: 0.25s;
+        width: 90%;
+        border-radius: 1em;
+        padding: 0.5em;
+        margin: 0.5em;
+        background-color: var(--background);
+        box-shadow: 0 0 0.5em var(--text);
+        display: grid;
+        grid-template-columns: 1.5em 1fr 2fr 1fr 5em;
+        
+        &:hover {
+            box-shadow: 0 0 1em var(--text);
+        }
+        
+        & dueTime {
+            font-style: italic;
+            height: 3em;
+            text-align: center;
+            justify-self: center;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+}
 
 .habitHistory {
     height: calc(100dvh - 10em);
@@ -281,89 +439,47 @@ button {
         overflow: hidden;
     }
 }
-.habitDisplayer {
+
+.NotesDisplayer {
     height: calc(100dvh - 10em);
-    width: 99%;
+    width: 90%;
     overflow-y: scroll;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content;
-    grid-auto-rows: min-content;
     scrollbar-width: none;
-    gap: 0.75em;
-
-    &>div {
-        height: fit-content;
-        justify-self: center;
-        transition-duration: 0.25s;
-        width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    .notesBox {
+        position: relative;
+        display: inline;
+        place-content: center;
+        grid-template-columns: 1fr;
+        margin: 1em;
+        padding: 1em;
+        max-width: 300px;
         border-radius: 1em;
-        padding: 0.5em;
-        margin: 0.5em;
-        background-color: var(--background);
-        display: grid;
-        grid-template-columns: 1.5em 1fr 2fr 5em;
-
-
-        &:hover {
-            box-shadow: 0 0 0.5em var(--text);
+        background-color: var(--primary);
+        height: min-content;
+        button {
+            margin-top: 1em;
         }
-
-        & button {
-            background-color: none;
-            font-size: 1rem;
-            border-radius: 0.5em;
-            height: min-content;
-            width: min-content;
-            padding: 0.5em;
-            background-color: var(--accent);
-            align-self: center;
-
-            &:hover {
-                background-color: var(--primary);
-            }
+        button:hover {
+            box-shadow: 4px 4px 2px var(--text);
+            background-color: var(--accent) !important;
         }
     }
-}
-
-.taskDisplayer {
-    height: calc(100dvh - 10em);
-    width: 99%;
-    overflow-y: scroll;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content;
-    grid-auto-rows: min-content;
-    scrollbar-width: none;
-    gap: 0.75em;
-
-    &>div {
-        height: fit-content;
-        justify-self: center;
+    #AddNoteButton {
         transition-duration: 0.25s;
-        width: 90%;
+        cursor: pointer;
+        margin: 1em;
         border-radius: 1em;
-        padding: 0.5em;
-        margin: 0.5em;
-        background-color: var(--background);
-        box-shadow: 0 0 0.5em var(--text);
         display: grid;
-        grid-template-columns: 1.5em 1fr 2fr 1fr 5em;
-
+        place-content: center;
+        width: 4em;
+        height: 4em;
+        background-color: var(--primary);
         &:hover {
-            box-shadow: 0 0 1em var(--text);
-        }
-
-        & dueTime {
-            font-style: italic;
-            height: 3em;
-            text-align: center;
-            justify-self: center;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            box-shadow: 0 0 0.5em grey;
         }
     }
 }

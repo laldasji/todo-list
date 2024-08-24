@@ -6,6 +6,12 @@ import { parseJSON } from 'date-fns';
 
 import { habitHistory } from './taskStorage.js';
 
+const notesList = [];
+
+if (localStorage.getItem("Notes") == null) {
+    localStorage.setItem("Notes", JSON.stringify(notesList));
+}
+
 // check if a day has passed, if yes, push habits into history that's it.
 const now = new Date();
 const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -32,5 +38,3 @@ else {
         localStorage.setItem("lastDate", JSON.stringify(today));
     }
 }
-
-const habitsList = localStorage.getItem('habitsList');

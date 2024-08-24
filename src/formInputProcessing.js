@@ -29,8 +29,6 @@ syncLocalStorage(habitHistory, "habitHistoryList");
 })();
 
 // for Task objects
-
-
 const taskForm = document.querySelector('#taskForm');
 
 const TaskName = document.querySelector('#TaskName');
@@ -104,3 +102,26 @@ HabitSubmission.addEventListener('click', (event) => {
   habitForm.reset();
 
 });
+
+// for notes
+
+const NoteSubmission = document.querySelector('#NoteSubmission');
+const notesForm = document.querySelector('#notesForm');
+const noteTitle = document.querySelector('#noteTitle');
+const noteContent = document.querySelector('#noteContent');
+
+NoteSubmission.addEventListener('click', (event) => {
+  event.preventDefault();
+  let notesList = JSON.parse(localStorage.getItem("Notes"));
+  if (noteTitle.value == '' && noteContent.value == '')
+    return;
+  const noteObject = {
+    Title: noteTitle.value,
+    Content: noteContent.value
+  };
+  notesList.push(noteObject);
+
+  localStorage.setItem("Notes", JSON.stringify(notesList));
+  notesForm.reset();
+  showContent(listElements[4]);
+})

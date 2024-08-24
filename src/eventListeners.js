@@ -8,6 +8,7 @@ const addTask = document.querySelector('#addTask');
 const addTaskDialog = document.querySelector('#addTaskDialog');
 const addTaskType = document.querySelector('#addTaskType');
 const taskTypeButtons = addTaskType.querySelectorAll('div');
+const addNotesDialog = document.querySelector('#addNotesDialog');
 
 // functions
 function toggleTheme() {
@@ -88,6 +89,11 @@ document.addEventListener('click', event => {
     const currentRatio = getAspectRatio();
     if (!(addTaskDialog.contains(event.target) || addTask.contains(event.target))) {
         addTaskDialog.style.display = 'none';
+    }
+    // !addNotesDialog.contains(event.target) && AddNoteButton != null
+    const AddNoteButton = document.querySelector('#AddNoteButton');
+    if (AddNoteButton == null || !(addNotesDialog.contains(event.target) || AddNoteButton.contains(event.target))) {
+        addNotesDialog.style.display = 'none';
     }
     if (infoBar.style.display == 'grid' && currentRatio <= 4 / 3 && !(infoBar.contains(event.target) || infoBarDisplayer.contains(event.target))) {
         infoBar.style.display = 'none';

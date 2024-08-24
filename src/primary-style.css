@@ -1,11 +1,17 @@
 * {
     margin: 0;
     padding: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 @font-face {
     font-family: Noto-Sans;
     src: url(./Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf);
+}
+
+textarea {
+    font-family: Noto-Sans;
 }
 
 :root[data-theme="light"] {

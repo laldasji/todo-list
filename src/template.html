@@ -69,6 +69,29 @@
             </div>
         </div>
     </div>
+    <div id="addNotesDialog" style="display: none;">
+        <div id="NotesDialogHeading">
+            Add New Note
+        </div>
+        <form action="" id="notesForm">
+            <div>
+                <label for="noteTitle">Title</label>
+                <br>
+                <input type="text" id="noteTitle">
+            </div>
+            <div>
+                <label for="noteContent">Content</label>
+                <br>
+                <textarea rows="2" placeholder="Enter content here ..." id="noteContent"></textarea>
+            </div>
+            <div class="submitButton">
+                <button type="submit" id="NoteSubmission">Add</button>
+            </div>
+        </form>
+        <div class="alert">
+            Properties marked with asterisk (*) are required
+        </div>
+    </div>
     <div id="infoBar">
         <div>
             Login (coming soon)
