@@ -15,13 +15,6 @@ function insertTaskByPriority(list, insertedTask) {
 class Habits {
     // elements contained in this class will be of the type HabitTask
     list = [];
-    deepCopy() {
-        const newHabits = new Habits();
-        this.list.forEach(habit => {
-            newHabits.list.push(habit.deepCopy());
-        })
-        return newHabits;
-    }
     push(habit) {
         if (!(habit instanceof HabitTask)) {
             console.log('Inserted Habit not an instance of a habit object');
@@ -32,28 +25,36 @@ class Habits {
 }
 
 class HabitHistory {
-    // elements contained in this class will be of the type Habits
+    // elements contained in this class will be objects withing lists, with property name and priority only. only completed tasks will have an entry in the objects
 
     list = [];
-    push(dailyHabitList) {
-        // create copy of the habits in the habitList and push the copy
-        const objectCopy = dailyHabitList.deepCopy();
-        this.list.push(objectCopy);
-        // take each habit in the habitList and uncheck it
-        dailyHabitList.list.forEach(habit => {
-            habit.checked = false;
+    push(dailyHabitList, dateForHabit) {
+        // daily habit list is a list of custom objects, with only name and priority, AND only for those elements that have been 'checked'
+        let habitsForTheDay = [dateForHabit];
+        dailyHabitList.forEach(habit => {
+            // create new object list to push
+            // take each habit in the habitList and uncheck it
+            if (habit.checked)
+            {
+                const newHistoryObject = {
+                    Name: habit.Name,
+                    Priority: habit.Priority
+                };
+                habitsForTheDay.push(newHistoryObject);
+                habit.checked = false;
+            }
         });
+        if (habitsForTheDay.length > 1)
+            this.list.push(habitsForTheDay);
     }
     trim() {
-        let i = 0;
-        while (i < this.list.length) {
-            const currentDistance = formatDistanceToNowStrict(list[i].DateOfCreation);
-            if (currentDistance.includes('month')) {
-                break;
-            }
-            i++;
+        let toRemove = this.list.length - 30;
+        if (toRemove > 0) {
+            this.list.splice(30, toRemove);
         }
-        this.list.splice(0, i);
+        else {
+            console.log('nothing to trim')
+        }
     }
 }
 

@@ -35,14 +35,6 @@ class HabitTask extends Task {
     constructor(Name, Description, Priority) {
         super(Name, Description, Priority);
     }
-    deepCopy() {
-        return new HabitTask(
-            this.Name,
-            this.Description,
-            this.Priority,
-            new Date(this.DateOfCreation)
-        );
-    }
 }
 
 export { SingleInstanceTask, HabitTask };

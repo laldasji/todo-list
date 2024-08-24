@@ -1,6 +1,6 @@
 // this derives information directly from localStorage
 const mainContent = document.querySelector('#mainContent');
-import { add, intlFormatDistance, startOfDay } from "date-fns";
+import { add, intlFormat, intlFormatDistance, parseJSON, startOfDay } from "date-fns";
 import { taskHistory, tasks, habits, habitHistory } from './taskStorage.js'
 
 export const listElements = document.querySelector('#infoBar').querySelector('ul').querySelectorAll('li');
@@ -51,7 +51,6 @@ const contentGenerator = {
                 else {
                     habitsList[index].checked = false;
                 }
-                console.log(habitsList[index]);
                 localStorage.setItem("habitsList", JSON.stringify(habitsList));
             });
 
@@ -151,13 +150,41 @@ const contentGenerator = {
         return element;
     },
     HabitHistory: () => {
+        let habitHistoryList = JSON.parse(localStorage.getItem("habitHistoryList"));
         const element = document.createElement('div');
-        const announce = document.createElement('h3');
-        announce.textContent = 'Will be available soon!';
-        announce.style.placeSelf = 'center';
-        announce.style.textAlign = 'center';
-        element.appendChild(announce);
+        if (habitHistoryList.length == 0)
+        {
+            const announce = document.createElement('h3');
+            announce.textContent = 'No history to display!';
+            announce.style.placeSelf = 'center';
+            element.appendChild(announce);
+            return element;
+        }
+        habitHistoryList.forEach(content => {
+            const Heading = document.createElement('h3');
+            Heading.textContent = intlFormat(parseJSON(content[0]));
+            const object = document.createElement('div');
+            object.classList.add('dayInfo');
+            object.append(Heading);
+            if (content.length > 1) {
+                for (let i = 1; i < content.length; i++) {
+                    const task = document.createElement('h5');
+                    task.textContent = content[i].Name;
+                    task.classList.add(`P${content[i].Priority}`);
+                    task.classList.add(`habitHistoryElement`);
+                    object.append(task);
+                }
+            }
+            else {
+                const task = document.createElement('h5');
+                task.textContent = 'No records';
+                task.classList.add(`habitHistoryElement`);
+                object.append(task);
+            }
+            element.appendChild(object);
+        });
         return element;
+        
     },
     TaskHistory: () => {
         let taskHistoryList = JSON.parse(localStorage.getItem("taskHistoryList"));;
