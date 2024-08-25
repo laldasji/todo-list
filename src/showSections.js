@@ -273,6 +273,7 @@ const contentGenerator = {
     Notes: () => {
         const element = document.createElement('div');
         const notesList = JSON.parse(localStorage.getItem("Notes"));
+        let removed = 0;
         for (let i = 0; i < notesList.length; i++) {
             const box = document.createElement('div');
             const heading = document.createElement('h5');
@@ -284,7 +285,8 @@ const contentGenerator = {
             DeleteButton.textContent = 'Delete';
             DeleteButton.addEventListener('click', () => {
                 element.removeChild(box);
-                notesList.splice(i, 1);
+                notesList.splice(i - removed, 1);
+                removed++;
                 localStorage.setItem("Notes", JSON.stringify(notesList));
             })
 
